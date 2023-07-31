@@ -1,15 +1,11 @@
 package com.rmanage.rmanage.entity;
 
+import com.rmanage.rmanage.worker.Worker;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
-import java.awt.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @Entity
-
 public class User extends BaseTimeEntity{
 
     @Id
@@ -18,6 +14,7 @@ public class User extends BaseTimeEntity{
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "workerId")
+    private Worker worker;
 
     private String role;
     private String password;
