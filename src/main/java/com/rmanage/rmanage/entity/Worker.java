@@ -1,9 +1,6 @@
 package com.rmanage.rmanage.entity;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
@@ -13,6 +10,10 @@ import java.sql.Timestamp;
 
 public class Worker {
 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long workerId;
     @MapsId("workplace_id")
     @ManyToOne
     private WorkPlace workPlace;
@@ -21,8 +22,6 @@ public class Worker {
     @ManyToOne
     private User user;
 
-    @EmbeddedId
-    private WorkerId workerId;
 
     private String name;
     private Timestamp period;

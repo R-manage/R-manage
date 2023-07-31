@@ -3,12 +3,10 @@ package com.rmanage.rmanage.entity;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @Entity
 
-public class Comunity extends BaseTimeEntity{
+public class Community extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +27,7 @@ public class Comunity extends BaseTimeEntity{
     private boolean isAnonymous;
     private int recommend;
 
-    public Comunity(User user, WorkPlace workPlace, String type, String title, String content, String writer, boolean isAnonymous, int recommend) {
+    public Community(User user, WorkPlace workPlace, String type, String title, String content, String writer, boolean isAnonymous, int recommend) {
         this.user = user;
         this.workPlace = workPlace;
         this.type = type;

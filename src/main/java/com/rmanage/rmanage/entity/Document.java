@@ -22,6 +22,10 @@ public class Document {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "workplace_id")
     private WorkPlace workPlace;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "workerId")
+    private Worker worker;
     private String type;
     private LocalDate expireDate;
 

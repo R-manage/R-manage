@@ -3,9 +3,6 @@ package com.rmanage.rmanage.entity;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @Entity
 
@@ -21,14 +18,14 @@ public class Comment extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
-    private Comunity comunity;
+    private Community community;
 
 
     private String content;
 
-    public Comment(User user, Comunity comunity, String content) {
+    public Comment(User user, Community community, String content) {
         this.user = user;
-        this.comunity = comunity;
+        this.community = community;
         this.content = content;
     }
 }

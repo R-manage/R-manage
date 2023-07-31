@@ -19,8 +19,12 @@ public class WorkAllowance {
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "workplace_id")
+    @JoinColumn(name = "workplaceId")
     private WorkPlace workPlace;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "workerId")
+    private Worker worker;
     private LocalDate workDate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
