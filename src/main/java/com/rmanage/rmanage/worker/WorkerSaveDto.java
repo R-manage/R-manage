@@ -13,8 +13,8 @@ public class WorkerSaveDto {
     private String name;
     private LocalDateTime period;
     private String color;
-    //private String breakTime;
-    private boolean holidayPay;
+    private String breakTime;
+    private String holidayPay;
     private int hourlyWage;
     private LocalDateTime payDay;
 
@@ -26,7 +26,7 @@ public class WorkerSaveDto {
                 .period(period)
                 .color(color)
                 .isCertified(false)
-                //.breakTime(breakTime)
+                .breakTime(breakTime)
                 .holidayPay(holidayPay)
                 .hourlyWage(hourlyWage)
                 .payDay(payDay)

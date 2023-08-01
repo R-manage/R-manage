@@ -32,13 +32,13 @@ public class Worker {
     private String color;
     private boolean isCertified;
     private String breakTime;
-    private boolean holidayPay;
+    private String holidayPay;
     private int hourlyWage;
     private LocalDateTime payDay;
 
 
     @Builder
-    public Worker(WorkPlace workPlace, User user, String name, LocalDateTime period, String color, boolean isCertified, boolean holidayPay, int hourlyWage, LocalDateTime payDay) {
+    public Worker(WorkPlace workPlace, User user, String name, LocalDateTime period, String color, boolean isCertified, String breakTime ,String holidayPay, int hourlyWage, LocalDateTime payDay) {
         this.workPlace = workPlace;
         this.user = user;
         this.name = name;
