@@ -2,13 +2,13 @@ package com.rmanage.rmanage.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Entity
-
-
-
+@Getter
 public class Setting {
 
     @Id
@@ -26,7 +26,9 @@ public class Setting {
     private String accountSecurity;
 
 
-    public Setting(boolean alarm, boolean preview, boolean pushAlarm, boolean pushSound, boolean pushVibration, String accountSecurity) {
+    @Builder
+    public Setting(User user, boolean alarm, boolean preview, boolean pushAlarm, boolean pushSound, boolean pushVibration, String accountSecurity) {
+        this.user = user;
         this.alarm = alarm;
         this.preview = preview;
         this.pushAlarm = pushAlarm;
