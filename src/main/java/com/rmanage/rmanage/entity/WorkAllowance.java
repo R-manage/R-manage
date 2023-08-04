@@ -1,5 +1,6 @@
 package com.rmanage.rmanage.entity;
 
+import com.rmanage.rmanage.workPlace.WorkPlace;
 import com.rmanage.rmanage.worker.Worker;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;

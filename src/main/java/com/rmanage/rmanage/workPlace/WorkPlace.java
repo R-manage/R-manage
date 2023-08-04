@@ -1,4 +1,4 @@
-package com.rmanage.rmanage.entity;
+package com.rmanage.rmanage.workPlace;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,12 +20,10 @@ public class WorkPlace {
     private Long workPlaceId;
 
     private String name;
-    private String wageType;
 
 
     @Builder
-    public WorkPlace(String name, String wageType) {
+    public WorkPlace(String name) {
         this.name = name;
-        this.wageType = wageType;
     }
 }
