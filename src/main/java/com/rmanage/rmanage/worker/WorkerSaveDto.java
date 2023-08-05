@@ -1,7 +1,8 @@
 package com.rmanage.rmanage.worker;
 
 import com.rmanage.rmanage.entity.User;
-import com.rmanage.rmanage.workPlace.WorkPlace;
+import com.rmanage.rmanage.entity.Worker;
+import com.rmanage.rmanage.entity.WorkPlace;
 import lombok.Getter;
 
 

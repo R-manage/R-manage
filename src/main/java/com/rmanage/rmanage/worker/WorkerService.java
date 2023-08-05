@@ -2,7 +2,7 @@ package com.rmanage.rmanage.worker;
 
 import com.rmanage.rmanage.UserRepository;
 import com.rmanage.rmanage.entity.User;
-import com.rmanage.rmanage.workPlace.WorkPlace;
+import com.rmanage.rmanage.entity.WorkPlace;
 import com.rmanage.rmanage.workPlace.WorkPlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

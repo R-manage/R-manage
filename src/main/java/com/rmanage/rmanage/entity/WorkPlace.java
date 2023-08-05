@@ -1,4 +1,4 @@
-package com.rmanage.rmanage.workPlace;
+package com.rmanage.rmanage.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

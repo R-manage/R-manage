@@ -1,5 +1,6 @@
 package com.rmanage.rmanage.worker;
 
+import com.rmanage.rmanage.entity.Worker;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

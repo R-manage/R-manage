@@ -1,7 +1,5 @@
-package com.rmanage.rmanage.worker;
+package com.rmanage.rmanage.entity;
 
-import com.rmanage.rmanage.entity.User;
-import com.rmanage.rmanage.workPlace.WorkPlace;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
