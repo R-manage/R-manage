@@ -1,9 +1,13 @@
 package com.rmanage.rmanage.entity;
 
+//  import com.rmanage.rmanage.worker.Worker;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Entity
@@ -25,10 +29,11 @@ public class User extends BaseTimeEntity{
     private String email;
     private boolean isEmployee;
     private int phoneCode;
-    private boolean isPhoneAuth;
+
+    private String phoneAuthDate;
 
     @Builder
-    public User(String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, int phoneCode, boolean isPhoneAuth) {
+    public User(String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, int phoneCode, String phoneAuthDate) {
         this.role = role;
         this.password = password;
         this.nickname = nickname;
@@ -36,6 +41,6 @@ public class User extends BaseTimeEntity{
         this.email = email;
         this.isEmployee = isEmployee;
         this.phoneCode = phoneCode;
-        this.isPhoneAuth = isPhoneAuth;
+        this.phoneAuthDate = phoneAuthDate;
     }
 }

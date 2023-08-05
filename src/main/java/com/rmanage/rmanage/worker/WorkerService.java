@@ -26,7 +26,7 @@ public class WorkerService {
         userRepository.save(User.builder()
                         .email("email")
                         .isEmployee(true)
-                        .isPhoneAuth(false)
+                        .phoneAuthDate("2023-03-03")
                         .nickname("oyun")
                         .password("password")
                         .phoneCode(1111)
