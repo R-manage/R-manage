@@ -31,6 +31,6 @@ public class JoinService {
         if (joinRepository.findByNickname(joinRequestDto.getNickname()).isPresent()){
             throw new Exception("이미 존재하는 닉네임입니다.");
         }
-        joinRepository.save(new User(joinDto.getEmail(), joinDto.getPassword(), joinDto.getAccessToken()));
+//        joinRepository.save(new User(joinDto.getEmail(), joinDto.getPassword(), joinDto.getAccessToken()));
     }
 }
