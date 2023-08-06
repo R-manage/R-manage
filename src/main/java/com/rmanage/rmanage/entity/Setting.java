@@ -36,4 +36,12 @@ public class Setting {
         this.pushVibration = pushVibration;
         this.accountSecurity = accountSecurity;
     }
+
+    public void update(boolean alarm, boolean preview, boolean pushAlarm, boolean pushSound, boolean pushVibration) {
+        this.alarm = alarm;
+        this.preview = preview;
+        this.pushAlarm = pushAlarm;
+        this.pushSound = pushSound;
+        this.pushVibration = pushVibration;
+    }
 }

@@ -43,4 +43,8 @@ public class User extends BaseTimeEntity{
         this.phoneCode = phoneCode;
         this.phoneAuthDate = phoneAuthDate;
     }
+
+    public void pwUpdate(String password) {
+        this.password = password;
+    }
 }
