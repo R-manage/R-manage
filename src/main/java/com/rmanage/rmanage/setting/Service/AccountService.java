@@ -88,9 +88,6 @@ public class AccountService {
 
     // 현재 비밀번호 확인(비밀번호와 이메일)
     public PwResponseDto findPwById(long userId, String email, String password) {
-        System.out.println(userId);
-        System.out.println(password);
-        System.out.println(email);
         try {
             Optional<User> entity = userRepository.findById(userId);
             if(entity.isEmpty()){
@@ -109,6 +106,28 @@ public class AccountService {
         }   catch (Exception e){
             System.out.println(e);
             return new PwResponseDto(false,3011,"비밀번호 확인 실패",null);
+        }
+    }
+
+    // 비밀번호 변경
+    @Transactional
+    public PwResponseDto updatePwById(long userId, String password) {
+        try {
+            Optional<User> entity = userRepository.findById(userId);
+            if(entity.isEmpty()){
+                return new PwResponseDto(false,3012,"해당하는 근로자 정보가 없음",null);
+            }
+            User user = entity.get();
+            // 조회 성공
+            if(password == "" || password == null) {
+                return new PwResponseDto(false,2085,"비밀번호 없음", null);
+            }
+            user.pwUpdate(password);
+
+            return new PwResponseDto(true,1011,"비밀번호 변경 성공", null);
+        }   catch (Exception e){
+            System.out.println(e);
+            return new PwResponseDto(false,3011,"비밀번호 변경 실패",null);
         }
     }
 
