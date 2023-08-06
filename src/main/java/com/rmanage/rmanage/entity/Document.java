@@ -28,6 +28,7 @@ public class Document {
     private Worker worker;
     private String type;
     private LocalDate expireDate;
+    private String document_image;
 
     public Document(User user, WorkPlace workPlace, String type, LocalDate expireDate) {
         this.user = user;

@@ -21,7 +21,6 @@ public class WorkerService {
 
         User user = userRepository.findById(workerSaveDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. id=" + workerSaveDto.getUserId()));
-
         workerRepository.save(workerSaveDto.toEntity(user));
     }
 

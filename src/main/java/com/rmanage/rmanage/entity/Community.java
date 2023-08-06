@@ -1,16 +1,20 @@
 package com.rmanage.rmanage.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @NoArgsConstructor
 @Entity
+@Getter
 
 public class Community extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long postId = null;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -27,6 +31,8 @@ public class Community extends BaseTimeEntity{
     private boolean isAnonymous;
     private int recommend;
 
+
+    @Builder
     public Community(User user, WorkPlace workPlace, String type, String title, String content, String writer, boolean isAnonymous, int recommend) {
         this.user = user;
         this.workPlace = workPlace;
@@ -36,5 +42,7 @@ public class Community extends BaseTimeEntity{
         this.writer = writer;
         this.isAnonymous = isAnonymous;
         this.recommend = recommend;
+
     }
+
 }
