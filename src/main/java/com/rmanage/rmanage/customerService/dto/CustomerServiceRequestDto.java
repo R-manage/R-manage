@@ -20,6 +20,7 @@ public class CustomerServiceRequestDto {
         this.content = content;
     }
 
+    @Builder
     public CustomerService CustomerServicetoEntity(User user) {
         return CustomerService.builder()
                 .user(user)
