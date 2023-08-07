@@ -32,6 +32,8 @@ public class User extends BaseTimeEntity{
 
     private String phoneAuthDate;
 
+    private String phoneAuthCode;
+
     @Builder
     public User(String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, int phoneCode, String phoneAuthDate) {
         this.role = role;
@@ -42,6 +44,7 @@ public class User extends BaseTimeEntity{
         this.isEmployee = isEmployee;
         this.phoneCode = phoneCode;
         this.phoneAuthDate = phoneAuthDate;
+        this.phoneAuthCode = null;
     }
 
     public void pwUpdate(String password) {
