@@ -3,11 +3,9 @@ package com.rmanage.rmanage.setting.Service;
 import com.rmanage.rmanage.SettingRepository;
 import com.rmanage.rmanage.UserRepository;
 import com.rmanage.rmanage.entity.Setting;
-import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.setting.dto.AlertResponseDto;
 import com.rmanage.rmanage.setting.dto.AlertResultDto;
-import com.rmanage.rmanage.setting.dto.PhoneResponseDto;
-import com.rmanage.rmanage.setting.dto.PhoneResultDto;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,6 +59,29 @@ public class AlertService {
             }
             Setting setting = entity.get();
             // 조회 성공
+            List<AlertResultDto> alertResult = new ArrayList<>();
+
+            alertResult.add(new AlertResultDto(setting.isAlarm(), setting.isPreview(), setting.isPushAlarm(), setting.isPushSound(), setting.isPushVibration()));
+
+            return new AlertResponseDto(true,1011,"알람설정 조회 성공", alertResult);
+        }   catch (Exception e){
+            System.out.println(e);
+            return new AlertResponseDto(false,3041,"알람설정 조회 실패",null);
+        }
+    }
+
+    // 알림 설정 수정
+    @Transactional
+    public AlertResponseDto updateAlertById(long userId, boolean alarm, boolean preview, boolean pushAlarm, boolean pushSound, boolean pushVibration) {
+        try {
+            // boolean 값 유효성 검사도 해야하나?
+            Optional<Setting> entity = settingRepository.findById(userId);
+            if(entity.isEmpty()){
+                return new AlertResponseDto(false,3013,"해당하는 근로자 정보가 없음",null);
+            }
+            Setting setting = entity.get();
+            // 조회 성공
+            setting.update(alarm, preview, pushAlarm, pushSound, pushVibration);
             List<AlertResultDto> alertResult = new ArrayList<>();
 
             alertResult.add(new AlertResultDto(setting.isAlarm(), setting.isPreview(), setting.isPushAlarm(), setting.isPushSound(), setting.isPushVibration()));
