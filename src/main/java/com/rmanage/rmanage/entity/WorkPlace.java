@@ -21,12 +21,10 @@ public class WorkPlace {
     private Long workPlaceId;
 
     private String name;
-    private String wageType;
 
 
     @Builder
-    public WorkPlace(String name, String wageType) {
+    public WorkPlace(String name) {
         this.name = name;
-        this.wageType = wageType;
     }
 }

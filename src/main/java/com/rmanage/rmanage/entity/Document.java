@@ -1,14 +1,14 @@
 package com.rmanage.rmanage.entity;
 
-import com.rmanage.rmanage.worker.Worker;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @NoArgsConstructor
 @Entity
-
+@Getter
 public class Document {
 
     @Id
@@ -28,12 +28,24 @@ public class Document {
     private Worker worker;
     private String type;
     private LocalDate expireDate;
-    private String document_image;
+    private String imageUrl;
 
-    public Document(User user, WorkPlace workPlace, String type, LocalDate expireDate) {
+    public Document(User user, WorkPlace workPlace, String type, LocalDate expireDate, Worker worker, String imageUrl) {
         this.user = user;
         this.workPlace = workPlace;
         this.type = type;
+        this.expireDate = expireDate;
+        this.worker = worker;
+        this.imageUrl = imageUrl;
+    }
+
+    public Document(Long documentId, User user, WorkPlace workPlace, Worker worker, String type, String imageUrl, LocalDate expireDate) {
+        this.documentId = documentId;
+        this.user = user;
+        this.workPlace = workPlace;
+        this.worker = worker;
+        this.type = type;
+        this.imageUrl = imageUrl;
         this.expireDate = expireDate;
     }
 }
