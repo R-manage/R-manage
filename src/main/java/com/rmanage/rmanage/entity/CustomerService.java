@@ -1,13 +1,15 @@
 package com.rmanage.rmanage.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
 @NoArgsConstructor
 @Entity
-
+@Getter
 public class CustomerService extends BaseTimeEntity {
 
     @Id
@@ -22,9 +24,11 @@ public class CustomerService extends BaseTimeEntity {
     private String content;
     private boolean isAnswered;
 
-    public CustomerService(String email, String content, boolean isAnswered) {
+    @Builder
+    public CustomerService(User user, String email, String content) {
+        this.user = user;
         this.email = email;
         this.content = content;
-        this.isAnswered = isAnswered;
+        this.isAnswered = false;
     }
 }
