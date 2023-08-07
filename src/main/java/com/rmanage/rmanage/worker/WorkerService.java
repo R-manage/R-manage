@@ -3,6 +3,7 @@ package com.rmanage.rmanage.worker;
 import com.rmanage.rmanage.UserRepository;
 import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.entity.WorkPlace;
+import com.rmanage.rmanage.entity.Worker;
 import com.rmanage.rmanage.workPlace.WorkPlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,28 +22,26 @@ public class WorkerService {
     private final UserRepository userRepository;
     private final WorkPlaceRepository workPlaceRepository;
 
+    @Transactional
     public void save(WorkerSaveDto workerSaveDto) {
-
-        userRepository.save(User.builder()
-                        .email("email")
-                        .isEmployee(true)
-                        .phoneAuthDate("2023-03-03")
-                        .nickname("oyun")
-                        .password("password")
-                        .phoneCode(1111)
-                        .phoneNumber("1111")
-                .build());
 
         User user = userRepository.findById(workerSaveDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. id=" + workerSaveDto.getUserId()));
 
-        WorkPlace workPlace = workPlaceRepository.save(new WorkPlace(workerSaveDto.getName()));
+        WorkPlace workPlace = workPlaceRepository.save(new WorkPlace(workerSaveDto.getWorkPlaceName()));
         workerRepository.save(workerSaveDto.toEntity(user, workPlace));
     }
 
+    @Transactional
+    public void update(Long workerId, WorkerUpdateRequestDto workerUpdateRequestDto) {
 
-    public void update(WorkPlace workPlace) {
+        Worker worker = workerRepository.findById(workerId)
+                .orElseThrow(() -> new IllegalArgumentException("근로자가 존재하지 않습니다. id=" + workerId));
 
+        WorkPlace workPlace = worker.getWorkPlace();
+
+        worker.update(workerUpdateRequestDto);
+        workPlace.update(workerUpdateRequestDto.getWorkPlaceName());
     }
 
 
@@ -63,7 +62,7 @@ public class WorkerService {
 
     //전체 조회
     @Transactional(readOnly = true)
-    public List<WorkerResponseDto> getWorkerByUser(Long userId) {
+    public List<WorkerResponseDto> getWorkersByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. id=" + userId));
 
