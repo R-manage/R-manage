@@ -5,10 +5,7 @@ import com.rmanage.rmanage.settingWorker.dto.SettingWorkerResponseDto;
 import com.rmanage.rmanage.settingWorker.service.SettingWorkerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,11 +22,11 @@ public class SettingWorkerApiController {
         return ResponseEntity.ok().body(findUser);
     }
 
-    // 근무지 목록 조회
-    @PatchMapping("/worker/workplace")
-    public ResponseEntity<SettingWorkerResponseDto> deleteAlert(@RequestBody SearchUserId searchUserId) {
+    // 근무지 삭제
+    @DeleteMapping("/worker/workplace/{workerId}")
+    public ResponseEntity<SettingWorkerResponseDto> deleteAlert(@PathVariable(name = "workerId") long workerId) {
 
-        SettingWorkerResponseDto findUser = settingWorkerService.findWorkPlaceById(searchUserId.getUserId());
+        SettingWorkerResponseDto findUser = settingWorkerService.deleteWorkPlaceById(workerId);
 
         return ResponseEntity.ok().body(findUser);
     }

@@ -11,6 +11,7 @@ import com.rmanage.rmanage.settingWorker.dto.SettingWorkerResponseDto;
 import com.rmanage.rmanage.settingWorker.dto.SettingWorkerResultDto;
 import com.rmanage.rmanage.workPlace.WorkPlaceRepository;
 import com.rmanage.rmanage.worker.WorkerRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,7 +70,7 @@ public class SettingWorkerService {
             System.out.println(worker);
 
             //settingWorkerResult.add(new SettingWorkerResultDto(worker));
-            worker.stream().forEach(data -> settingWorkerResult.add(new SettingWorkerResultDto(data.getWorkPlace().getWorkPlaceId(), data.getWorkPlace().getName(), (data.getWorkAuthDate() != null) ? data.getWorkAuthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)));
+            worker.stream().forEach(data -> settingWorkerResult.add(new SettingWorkerResultDto(data.getWorkerId(), data.getWorkPlace().getName(), (data.getWorkAuthDate() != null) ? data.getWorkAuthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)));
             return new SettingWorkerResponseDto(true,1011,"근무지 조회 성공", settingWorkerResult);
         }   catch (Exception e){
             System.out.println(e);
@@ -78,5 +79,20 @@ public class SettingWorkerService {
     }
 
     // 근무지 삭제(설정 페이지)
+    @Transactional
+    public SettingWorkerResponseDto deleteWorkPlaceById(long workerId) {
+
+        try {
+            Optional<Worker> entity = workerRepository.findById(workerId);
+            if(entity.isEmpty()) {
+                return new SettingWorkerResponseDto(false,3012,"해당하는 근로자 정보가 없음", null);
+            }
+            workerRepository.deleteById(workerId);
+            return new SettingWorkerResponseDto(true,1011,"근무지 삭제 성공", null);
+        }   catch (Exception e){
+            System.out.println(e);
+            return new SettingWorkerResponseDto(false,3041,"근무지 삭제 실패",null);
+        }
+    }
 
 }

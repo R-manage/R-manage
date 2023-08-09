@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Data
 public class SettingWorkerResultDto {
-    private long workplaceId;
+    private long workerId;
     private String name;
     private String validity;
 }
