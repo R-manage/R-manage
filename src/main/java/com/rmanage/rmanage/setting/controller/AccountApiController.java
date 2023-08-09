@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountApiController {
     private final AccountService accountService;
 
+    @PostMapping("/every/account")
+    public ResponseEntity<AccountResponseDto> findAccount(@RequestBody SearchUserId searchUserId) {
+
+
+        AccountResponseDto findUser = accountService.findAccountById(searchUserId.getUserId());
+
+        return ResponseEntity.ok().body(findUser);
+    }
 
     @PostMapping("/every/email")
     public ResponseEntity<EmailResponseDto> findEmail(@RequestBody SearchUserId searchUserId) {

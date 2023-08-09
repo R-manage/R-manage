@@ -41,6 +41,25 @@ public class AccountService {
 //        userRepository.save(User.builder().role(role1).password(password1).nickname(nickname1).phoneNumber(phoneNumber1).email(email1).isEmployee(isEmployee1).phoneCode(phoneCode1).phoneAuthDate(phoneAuthDate1).build());
 //    }
 
+    // 계정 조회
+    public AccountResponseDto findAccountById(long userId) {
+        try {
+            Optional<User> entity = userRepository.findById(userId);
+            if(entity.isEmpty()){
+                return new AccountResponseDto(false,3012,"해당하는 근로자 정보가 없음",null);
+            }
+            User user = entity.get();
+            // 조회 성공
+            List<AccountResultDto> accountResult = new ArrayList<>();
+            accountResult.add(new AccountResultDto(user.getNickname(), user.getEmail(), user.getPhoneNumber(), null));
+
+            return new AccountResponseDto(true,1011,"계정 조회 성공", accountResult);
+        }   catch (Exception e){
+            System.out.println(e);
+            return new AccountResponseDto(false,3035,"계정 조회 실패",null);
+        }
+    }
+
     // 이메일 조회
     public EmailResponseDto findEmailById(long userId) {
         // createSave();

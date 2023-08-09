@@ -40,8 +40,7 @@ public class Worker {
 
 
     @Builder
-    public Worker(Long workerId, WorkPlace workPlace, User user, String name, LocalDateTime period, String color, boolean isCertified, String breakTime, String holidayPay, boolean isManager, int hourlyWage, LocalDateTime payDay, String tax, String wageType, LocalDateTime workAuthDate) {
-        this.workerId = workerId;
+    public Worker(WorkPlace workPlace, User user, String name, LocalDateTime period, String color, boolean isCertified, String breakTime, String holidayPay, boolean isManager, int hourlyWage, LocalDateTime payDay, String tax, String wageType, LocalDateTime workAuthDate) {
         this.workPlace = workPlace;
         this.user = user;
         this.name = name;
