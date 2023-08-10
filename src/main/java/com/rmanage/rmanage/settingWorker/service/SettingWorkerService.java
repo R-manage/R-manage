@@ -1,12 +1,9 @@
 package com.rmanage.rmanage.settingWorker.service;
 
 import com.rmanage.rmanage.UserRepository;
-import com.rmanage.rmanage.entity.Setting;
 import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.entity.WorkPlace;
 import com.rmanage.rmanage.entity.Worker;
-import com.rmanage.rmanage.setting.dto.AlertResponseDto;
-import com.rmanage.rmanage.setting.dto.AlertResultDto;
 import com.rmanage.rmanage.settingWorker.dto.SettingWorkerResponseDto;
 import com.rmanage.rmanage.settingWorker.dto.SettingWorkerResultDto;
 import com.rmanage.rmanage.workPlace.WorkPlaceRepository;
@@ -42,9 +39,9 @@ public class SettingWorkerService {
     }
 
     public void createWorker() {
-        Optional<User> user = userRepository.findById(6L);
+        Optional<User> user = userRepository.findById(13L);
         User entity = user.get();
-        Optional<WorkPlace> workPlace = workPlaceRepository.findById(5L);
+        Optional<WorkPlace> workPlace = workPlaceRepository.findById(6L);
         WorkPlace entity2 = workPlace.get();
 
         workerRepository.save(Worker.builder().workPlace(entity2).user(entity).name("근로자명2").color("색상").isCertified(false).isManager(false).hourlyWage(10000).workAuthDate(LocalDateTime.now()).build());

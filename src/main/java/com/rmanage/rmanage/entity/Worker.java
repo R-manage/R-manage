@@ -55,6 +55,9 @@ public class Worker {
         this.tax = tax;
         this.wageType = wageType;
         this.workAuthDate = workAuthDate;
+    }
 
+    public void updateManager(boolean isManager) {
+        this.isManager = isManager;
     }
 }
