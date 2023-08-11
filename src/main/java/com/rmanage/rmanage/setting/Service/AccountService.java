@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -147,6 +149,37 @@ public class AccountService {
         }   catch (Exception e){
             System.out.println(e);
             return new PwResponseDto(false,3011,"비밀번호 변경 실패",null);
+        }
+    }
+
+    // 계정 보안 진단
+    public SecurityResponseDto findSecurityById(long userId) {
+        try {
+            Optional<User> entity = userRepository.findById(userId);
+            if(entity.isEmpty()){
+                return new SecurityResponseDto(false,3012,"해당하는 근로자 정보가 없음",null);
+            }
+            User user = entity.get();
+            // 조회 성공
+            List<SecurityResultDto> securityResult = new ArrayList<>();
+            // 3개월 이내인지 판단
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            boolean isBadPeriod = user.getUpdatedAt().isAfter(currentDateTime.minusMonths(3));
+
+            if(user.getPhoneNumber() == null && !isBadPeriod) { // 비밀번호 변경 날짜를 update_at으로 봐도 되는가??
+                securityResult.add(new SecurityResultDto("위험", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), false, null));
+            } else if(user.getPhoneNumber() == null){
+                securityResult.add(new SecurityResultDto("보통", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), false, null));
+            } else if(!isBadPeriod) {
+                securityResult.add(new SecurityResultDto("보통", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), true, user.getPhoneNumber()));
+            } else {
+                securityResult.add(new SecurityResultDto("안전", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), true, user.getPhoneNumber()));
+            }
+
+            return new SecurityResponseDto(true,1011,"계정 보안 진단 성공", securityResult);
+        }   catch (Exception e){
+            System.out.println(e);
+            return new SecurityResponseDto(false,3035,"계정 보안 진단 실패",null);
         }
     }
 

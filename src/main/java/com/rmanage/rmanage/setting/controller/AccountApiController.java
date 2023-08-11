@@ -57,4 +57,13 @@ public class AccountApiController {
         return ResponseEntity.ok().body(findUser);
     }
 
+    @PostMapping("/every/security")
+    public ResponseEntity<SecurityResponseDto> checkSecurity(@RequestBody SearchUserId searchUserId) {
+
+        SecurityResponseDto findUser = accountService.findSecurityById(searchUserId.getUserId());
+
+
+        return ResponseEntity.ok().body(findUser);
+    }
+
 }
