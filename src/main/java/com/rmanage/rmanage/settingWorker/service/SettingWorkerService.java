@@ -54,12 +54,12 @@ public class SettingWorkerService {
         try {
             Optional<User> entity = userRepository.findById(userId);
             if(entity.isEmpty()){
-                return new SettingWorkerResponseDto(false,3013,"해당하는 근로자 정보가 없음",null);
+                return new SettingWorkerResponseDto(false,3002,"존재하지 않는 회원",null);
             }
             User user = entity.get();
             List<Worker> worker = workerRepository.findByUser(user);
             if(worker.isEmpty()){
-                return new SettingWorkerResponseDto(false,3013,"해당하는 근무지 정보가 없음",null);
+                return new SettingWorkerResponseDto(false,3003,"해당하는 근무지 정보가 없음",null);
             }
 
             // 조회 성공
@@ -68,10 +68,10 @@ public class SettingWorkerService {
 
             //settingWorkerResult.add(new SettingWorkerResultDto(worker));
             worker.stream().forEach(data -> settingWorkerResult.add(new SettingWorkerResultDto(data.getWorkerId(), data.getWorkPlace().getName(), (data.getWorkAuthDate() != null) ? data.getWorkAuthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")) : null)));
-            return new SettingWorkerResponseDto(true,1011,"근무지 조회 성공", settingWorkerResult);
+            return new SettingWorkerResponseDto(true,1057,"근무지 조회 성공", settingWorkerResult);
         }   catch (Exception e){
             System.out.println(e);
-            return new SettingWorkerResponseDto(false,3041,"근무지 조회 실패",null);
+            return new SettingWorkerResponseDto(false,3066,"근무지 조회 실패",null);
         }
     }
 
@@ -82,13 +82,13 @@ public class SettingWorkerService {
         try {
             Optional<Worker> entity = workerRepository.findById(workerId);
             if(entity.isEmpty()) {
-                return new SettingWorkerResponseDto(false,3012,"해당하는 근로자 정보가 없음", null);
+                return new SettingWorkerResponseDto(false,3004,"해당하는 근무근로자 정보가 없음", null);
             }
             workerRepository.deleteById(workerId);
-            return new SettingWorkerResponseDto(true,1011,"근무지 삭제 성공", null);
+            return new SettingWorkerResponseDto(true,1058,"근무지 삭제 성공", null);
         }   catch (Exception e){
             System.out.println(e);
-            return new SettingWorkerResponseDto(false,3041,"근무지 삭제 실패",null);
+            return new SettingWorkerResponseDto(false,3067,"근무지 삭제 실패",null);
         }
     }
 
