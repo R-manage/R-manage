@@ -44,8 +44,13 @@ public class WorkerService {
         workPlace.update(workerUpdateRequestDto.getWorkPlaceName());
     }
 
+    @Transactional
+    public void delete(Long workerId) {
 
-    public void delete(WorkPlace workPlace) {
+        Worker worker = workerRepository.findById(workerId)
+                .orElseThrow(() -> new IllegalArgumentException("근무지가 존재하지 않습니다."));
+
+        workerRepository.delete(worker);
 
     }
 
@@ -55,7 +60,7 @@ public class WorkerService {
 
         return workerRepository.findById(workerId)
                 .map(WorkerResponseDto::new)
-                .orElseThrow(()-> new IllegalArgumentException("근무지가 존재하지 않습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("근무지가 존재하지 않습니다."));
 
 
     }
@@ -71,4 +76,6 @@ public class WorkerService {
                 .collect(Collectors.toList());
 
     }
+
+
 }

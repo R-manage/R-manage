@@ -26,6 +26,14 @@ public class WorkerController {
         return ResponseEntity.ok("근무지가 수정되었습니다.");
     }
 
+    @DeleteMapping
+    public ResponseEntity delete(@PathVariable Long workerId) {
+        workerService.delete(workerId);
+
+        return ResponseEntity.ok("근무지가 삭제되었습니다.");
+    }
+
+
     //세부조회
     @GetMapping("/{workerId}")
     public ResponseEntity<WorkerResponseDto> getWorkerById(@PathVariable Long workerId) {
