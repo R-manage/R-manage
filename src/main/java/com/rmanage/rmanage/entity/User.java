@@ -37,7 +37,7 @@ public class User extends BaseTimeEntity{
 
     private String phoneAuthDate;
 
-    private String phoneAuthCode;
+    private int phoneAuthCode;
 
     @Builder
     public User(String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, String adminCode, int phoneCode, String phoneAuthDate) {
@@ -54,7 +54,6 @@ public class User extends BaseTimeEntity{
             this.adminCode = adminCode;
         this.phoneCode = phoneCode;
         this.phoneAuthDate = phoneAuthDate;
-        this.phoneAuthCode = null;
     }
     public List<String> getRoleList(){
         if(this.role.length() > 0){
@@ -67,5 +66,7 @@ public class User extends BaseTimeEntity{
     public void pwUpdate(String password) {
         this.password = password;
     }
+
+    public void phoneAuthCodeUpdate(int phoneAuthCode) { this.phoneAuthCode = phoneAuthCode;}
 
 }

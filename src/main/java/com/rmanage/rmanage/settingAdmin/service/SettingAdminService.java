@@ -34,16 +34,16 @@ public class SettingAdminService {
         try {
             Optional<User> entity = userRepository.findById(userId);
             if(entity.isEmpty()){
-                return new SettingAdminResponseDto(false,3013,"해당하는 근로자 정보가 없음",null);
+                return new SettingAdminResponseDto(false,3002,"존재하지 않는 회원",null);
             }
             User user = entity.get();
             List<Worker> worker = workerRepository.findByUser(user);
             if(worker.isEmpty()){
-                return new SettingAdminResponseDto(false,3013,"해당하는 근무지 정보가 없음",null);
+                return new SettingAdminResponseDto(false,3003,"해당하는 근무지 정보가 없음",null);
             }
             if(worker.size() != 1) {
                 // 무조건 1개여야 함!
-                return new SettingAdminResponseDto(false,3013,"근무지 정보 오류",null);
+                return new SettingAdminResponseDto(false,3003,"근무지 정보 오류",null);
             }
             List<Worker> employee = workerRepository.findByWorkPlace(worker.get(0).getWorkPlace());
             // 조회 성공
@@ -52,10 +52,10 @@ public class SettingAdminService {
             employee.remove(worker.get(0)); // 사장 본인은 제거하기!
             employee.stream().forEach(data -> settingAdminResult.add(new SettingAdminResultDto(data.getWorkerId(), data.getName(), data.isManager())));
 
-            return new SettingAdminResponseDto(true,1011,"근로자 정보 조회 성공", settingAdminResult);
+            return new SettingAdminResponseDto(true,1054,"근로자 정보 조회 성공", settingAdminResult);
         }   catch (Exception e){
             System.out.println(e);
-            return new SettingAdminResponseDto(false,3041,"근로자 정보 조회 실패",null);
+            return new SettingAdminResponseDto(false,3063,"근로자 정보 조회 실패",null);
         }
     }
 
@@ -66,16 +66,16 @@ public class SettingAdminService {
         try {
             Optional<Worker> entity = workerRepository.findById(workerId);
             if(entity.isEmpty()){
-                return new SettingAdminResponseDto(false,3013,"해당하는 근로자 정보가 없음",null);
+                return new SettingAdminResponseDto(false,3004,"해당하는 근무근로자 정보가 없음",null);
             }
             Worker worker = entity.get();
             // 조회 성공
             worker.updateManager(isManager);
 
-            return new SettingAdminResponseDto(true,1011,"근로자 관리자 권한 수정 성공", null);
+            return new SettingAdminResponseDto(true,1055,"근로자 관리자 권한 수정 성공", null);
         }   catch (Exception e){
             System.out.println(e);
-            return new SettingAdminResponseDto(false,3041,"근로자 관리자 권한 수정 실패",null);
+            return new SettingAdminResponseDto(false,3064,"근로자 관리자 권한 수정 실패",null);
         }
     }
 }

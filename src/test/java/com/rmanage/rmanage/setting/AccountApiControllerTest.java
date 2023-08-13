@@ -1,12 +1,12 @@
 package com.rmanage.rmanage.setting;
 
-import com.rmanage.rmanage.UserRepository;
 import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.entity.WorkPlace;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,5 +35,12 @@ public class AccountApiControllerTest {
         final WorkPlace workPlace1 = WorkPlace.builder().name("근무지2").build();
     }
 
+    @DisplayName("난수 생성 연습")
+    @Test
+    public void createRandom() {
+        //6자리 난수
+        int num = (int)(Math.random() * 899999) + 100000;  //  (100000 ~ 999999)
+        System.out.println(num);
+    }
 
 }
