@@ -1,13 +1,11 @@
-package com.rmanage.rmanage.community;
+package com.rmanage.rmanage.community.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.rmanage.rmanage.entity.Community;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,7 +19,7 @@ public class CommunityDto {
     private String title;
     private int commentCount;
     private String content;
-    private String type;
-
+    private String imageUrl;
+    private List<CommentDto> commentDto;
 
 }

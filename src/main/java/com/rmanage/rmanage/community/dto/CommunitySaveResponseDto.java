@@ -1,16 +1,18 @@
-package com.rmanage.rmanage.community;
+package com.rmanage.rmanage.community.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+
 @Getter
 @AllArgsConstructor
-public class CommunityResponseDto {
+public class CommunitySaveResponseDto {
     @JsonProperty("isSuccess")
     private boolean isSuccess;
     private int code;
     private String message;
-    private List<CommunityDto> result;
+    private List<CommunitySaveDto> result;
+
 }

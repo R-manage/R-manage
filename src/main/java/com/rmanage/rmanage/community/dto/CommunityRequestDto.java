@@ -1,4 +1,4 @@
-package com.rmanage.rmanage.community;
+package com.rmanage.rmanage.community.dto;
 
 import lombok.Getter;
 import lombok.Setter;
