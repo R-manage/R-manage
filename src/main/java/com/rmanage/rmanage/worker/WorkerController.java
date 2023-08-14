@@ -2,6 +2,7 @@ package com.rmanage.rmanage.worker;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class WorkerController {
         return ResponseEntity.ok("근무지가 수정되었습니다.");
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{workerId}")
     public ResponseEntity delete(@PathVariable Long workerId) {
         workerService.delete(workerId);
 
