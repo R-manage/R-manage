@@ -5,7 +5,13 @@ import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.sms.dto.SMSResponseDto;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import net.nurigo.sdk.NurigoApp;
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,9 +22,15 @@ import java.util.Random;
 @RequiredArgsConstructor
 @Service
 public class SMSService {
+    @Value("${sms.key}")
+    private String api_key;// 발급받은 api_key
+    @Value("${sms.secret.key}")
+    private String api_secret; //
 
     @Autowired
     final UserRepository userRepository;
+
+    DefaultMessageService messageService;
 
     // 전화번호번호 인증 요청
     @Transactional
@@ -42,7 +54,18 @@ public class SMSService {
             System.out.println(user.getPhoneAuthCode());
             List<String> list = new ArrayList<>();
             list.add(String.valueOf(randomNumber));
-            return new SMSResponseDto(true, 1011, "전화번호 인증번호 요청 성공", list);
+            // coolsms
+            // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
+            this.messageService = NurigoApp.INSTANCE.initialize(api_key, api_secret, "https://api.coolsms.co.kr");
+
+            Message message = new Message();
+            // 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+            message.setFrom("01088492305");
+            message.setTo(phonenumber);
+            message.setText("알매니지 인증번호 : " + String.valueOf(randomNumber));
+
+            SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+            return new SMSResponseDto(true, 1011, "전화번호 인증번호 요청 성공", response);
         } catch(Exception e) {
             System.out.println(e);
             return new SMSResponseDto(false, 3013, "전화번호 인증번호 요청 실패", null);
