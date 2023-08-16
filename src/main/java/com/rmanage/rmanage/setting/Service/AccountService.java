@@ -164,16 +164,16 @@ public class AccountService {
             List<SecurityResultDto> securityResult = new ArrayList<>();
             // 3개월 이내인지 판단
             LocalDateTime currentDateTime = LocalDateTime.now();
-            boolean isBadPeriod = user.getUpdatedAt().isAfter(currentDateTime.minusMonths(3));
+            boolean isBadPeriod = user.getPasswordAuthDate().isAfter(currentDateTime.minusMonths(3));
 
             if(user.getPhoneNumber() == null && !isBadPeriod) { // 비밀번호 변경 날짜를 update_at으로 봐도 되는가??
-                securityResult.add(new SecurityResultDto("위험", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), false, null));
+                securityResult.add(new SecurityResultDto("위험", user.getPasswordAuthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), false, null));
             } else if(user.getPhoneNumber() == null){
-                securityResult.add(new SecurityResultDto("보통", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), false, null));
+                securityResult.add(new SecurityResultDto("보통", user.getPasswordAuthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), false, null));
             } else if(!isBadPeriod) {
-                securityResult.add(new SecurityResultDto("보통", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), true, user.getPhoneNumber()));
+                securityResult.add(new SecurityResultDto("보통", user.getPasswordAuthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), true, user.getPhoneNumber()));
             } else {
-                securityResult.add(new SecurityResultDto("안전", user.getUpdatedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), true, user.getPhoneNumber()));
+                securityResult.add(new SecurityResultDto("안전", user.getPasswordAuthDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), true, user.getPhoneNumber()));
             }
 
             return new SecurityResponseDto(true,1049,"계정 보안 진단 성공", securityResult);

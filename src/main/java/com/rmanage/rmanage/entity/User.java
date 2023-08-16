@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @Entity
@@ -34,6 +35,8 @@ public class User extends BaseTimeEntity{
 
     private int phoneAuthCode;
 
+    private LocalDateTime passwordAuthDate;
+
     @Builder
     public User(String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, int phoneCode, String phoneAuthDate) {
         this.role = role;
@@ -44,6 +47,8 @@ public class User extends BaseTimeEntity{
         this.isEmployee = isEmployee;
         this.phoneCode = phoneCode;
         this.phoneAuthDate = phoneAuthDate;
+        this.passwordAuthDate = LocalDateTime.now();
+        this.phoneAuthCode = 0;
     }
 
     public void pwUpdate(String password) {
@@ -52,4 +57,8 @@ public class User extends BaseTimeEntity{
 
     public void phoneAuthCodeUpdate(int phoneAuthCode) { this.phoneAuthCode = phoneAuthCode;}
 
+    public void phoneUpdate(String phonenumber) {
+        this.phoneNumber = phonenumber;
+        this.phoneAuthDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 }
