@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ceb8740-aa9d-4435-b3fc-48a8b67aea40" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/WorkAllowance/DateStat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/WorkAllowance/HolidayStat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/WorkAllowance/Stat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/worker/WorkerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/worker/WorkerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/entity/WorkAllowance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/entity/WorkAllowance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/worker/WorkerResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/worker/WorkerResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/worker/WorkerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/rmanage/rmanage/worker/WorkerService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +99,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propVCSSupport.Mappings",
     "spring.configuration.checksum": "ccbd8e115e66840f4a7f50640f84eaa8",
     "vue.rearranger.settings.migration": "true"
   }
@@ -159,7 +165,7 @@
       <option name="presentableId" value="Default" />
       <updated>1691381113573</updated>
       <workItem from="1691381115572" duration="4932000" />
-      <workItem from="1691408324987" duration="6284000" />
+      <workItem from="1691408324987" duration="14343000" />
     </task>
     <servers />
   </component>

@@ -24,6 +24,7 @@ public class WorkerResponseDto {
     private String tax;
     private String wageType;
     private LocalDateTime workAuthDate;
+    private
 
     @Builder
     public WorkerResponseDto(Worker worker) {
