@@ -1,6 +1,8 @@
 package com.rmanage.rmanage.worker;
 
 import com.rmanage.rmanage.UserRepository;
+import com.rmanage.rmanage.WorkAllowance.Stat;
+import com.rmanage.rmanage.WorkAllowance.WorkAllowanceService;
 import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.entity.WorkPlace;
 import com.rmanage.rmanage.entity.Worker;
@@ -14,13 +16,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-
-
 public class WorkerService {
 
     private final WorkerRepository workerRepository;
     private final UserRepository userRepository;
     private final WorkPlaceRepository workPlaceRepository;
+
+    private final WorkAllowanceService workAllowanceService;
 
 
     @Transactional
@@ -59,11 +61,15 @@ public class WorkerService {
     @Transactional(readOnly = true)
     public WorkerResponseDto getWorkerById(Long workerId) {
 
-        return workerRepository.findById(workerId)
-                .map(WorkerResponseDto::new)
+        Worker worker = workerRepository.findById(workerId)
                 .orElseThrow(() -> new IllegalArgumentException("근무지가 존재하지 않습니다."));
 
+        Stat stat = workAllowanceService.getStat(worker);
 
+        WorkerResponseDto workerResponseDto = new WorkerResponseDto(worker);
+        workerResponseDto.setStat(stat);
+
+        return workerResponseDto;
     }
 
     //전체 조회

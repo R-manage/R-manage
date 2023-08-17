@@ -49,4 +49,5 @@ gradle-app.setting
 
 application-secret.properties
 .DS_Store
-.idea/misc.xml
+.idea
+.idea/gradle.xml
