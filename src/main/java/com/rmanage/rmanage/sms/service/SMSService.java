@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
@@ -36,14 +37,15 @@ public class SMSService {
     @Transactional
     public SMSResponseDto sendSMSById(String phonenumber, long userId) {
         try{
-            if(phonenumber == null) {
-                return new SMSResponseDto(false, 3013, "전화번호값 전달 안됨", null);
+            if(phonenumber == null || !Pattern.matches("\\d{11}$", phonenumber)) {
+                return new SMSResponseDto(false, 3056, "전화번호값 01012345678 형식으로 전달 필요", null);
             }
 
             Optional<User> entity = userRepository.findById(userId);
             if(entity.isEmpty()){
-                return new SMSResponseDto(false, 3013, "해당하는 근로자 정보가 없음", null);
+                return new SMSResponseDto(false, 3002, "해당하는 근로자 정보가 없음", null);
             }
+
             User user = entity.get();
             // 난수 생성해서 저장
             Random random = new Random();
@@ -65,10 +67,10 @@ public class SMSService {
             message.setText("알매니지 인증번호 : " + String.valueOf(randomNumber));
 
             SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-            return new SMSResponseDto(true, 1011, "전화번호 인증번호 요청 성공", response);
+            return new SMSResponseDto(true, 1047, "전화번호 인증번호 요청 성공", response);
         } catch(Exception e) {
             System.out.println(e);
-            return new SMSResponseDto(false, 3013, "전화번호 인증번호 요청 실패", null);
+            return new SMSResponseDto(false, 3056, "전화번호 인증번호 요청 실패", null);
         }
     }
 
@@ -76,12 +78,12 @@ public class SMSService {
     @Transactional
     public SMSResponseDto checkSMSById(String phonenumber, int number, long userId) {
         try{
-            if(phonenumber == null) {
-                return new SMSResponseDto(false, 1048, "전화번호값 전달 안됨", null);
+            if(phonenumber == null || phonenumber == "") {
+                return new SMSResponseDto(false, 3057, "전화번호값 전달 안됨", null);
             }
             Optional<User> entity = userRepository.findById(userId);
             if(entity.isEmpty()){
-                return new SMSResponseDto(false, 3013, "해당하는 근로자 정보가 없음", null);
+                return new SMSResponseDto(false, 3002, "해당하는 근로자 정보가 없음", null);
             }
             User user = entity.get();
             if(user.getPhoneAuthCode() == 0) {
@@ -92,7 +94,7 @@ public class SMSService {
                 // 전화번호 저장 후 성공 처리
                 user.phoneUpdate(phonenumber);
                 user.phoneAuthCodeUpdate(0); // 초기화
-                return new SMSResponseDto(true, 1011, "인증번호 인증 성공", null);
+                return new SMSResponseDto(true, 1048, "인증번호 인증 성공", null);
             } else {
                 return new SMSResponseDto(false, 3057, "인증번호가 틀림", null);
             }

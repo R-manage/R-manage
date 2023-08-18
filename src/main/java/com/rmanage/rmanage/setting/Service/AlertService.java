@@ -74,7 +74,6 @@ public class AlertService {
     @Transactional
     public AlertResponseDto updateAlertById(long userId, boolean alarm, boolean preview, boolean pushAlarm, boolean pushSound, boolean pushVibration) {
         try {
-            // boolean 값 유효성 검사도 해야하나?
             Optional<Setting> entity = settingRepository.findById(userId);
             if(entity.isEmpty()){
                 return new AlertResponseDto(false,3002,"존재하지 않는 회원",null);
