@@ -9,13 +9,16 @@ import com.rmanage.rmanage.entity.Comment;
 import com.rmanage.rmanage.entity.Community;
 import com.rmanage.rmanage.entity.User;
 import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CommentService {
     private final CommentRepository commentRepository;
     private EntityManager entityManager;
@@ -104,7 +107,10 @@ public class CommentService {
     // 글 삭제 시 연동해서 댓글 모두 삭제
     public boolean deleteAllComment(Long postId){
         try{
-            List<Comment> comments = commentRepository.findCommentBypostId(postId);
+
+            Community community = entityManager.find(Community.class,postId);
+
+            List<Comment> comments = commentRepository.findCommentByCommunity(community);
             // List<CommentDto> comment = new ArrayList<>();
             // if(comments.isEmpty()){ return false; }
             for(Comment comment1 : comments){

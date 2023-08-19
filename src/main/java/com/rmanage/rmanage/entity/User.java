@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 @NoArgsConstructor
 @Entity
@@ -39,6 +40,8 @@ public class User extends BaseTimeEntity{
 
     private int phoneAuthCode;
 
+    private LocalDateTime passwordAuthDate;
+
     @Builder
     public User(String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, String adminCode, int phoneCode, String phoneAuthDate) {
         this.role = role;
@@ -54,6 +57,8 @@ public class User extends BaseTimeEntity{
             this.adminCode = adminCode;
         this.phoneCode = phoneCode;
         this.phoneAuthDate = phoneAuthDate;
+        this.passwordAuthDate = LocalDateTime.now();
+        this.phoneAuthCode = 0;
     }
     public List<String> getRoleList(){
         if(this.role.length() > 0){
@@ -69,4 +74,8 @@ public class User extends BaseTimeEntity{
 
     public void phoneAuthCodeUpdate(int phoneAuthCode) { this.phoneAuthCode = phoneAuthCode;}
 
+    public void phoneUpdate(String phonenumber) {
+        this.phoneNumber = phonenumber;
+        this.phoneAuthDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 }

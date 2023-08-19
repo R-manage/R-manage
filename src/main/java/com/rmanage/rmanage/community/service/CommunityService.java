@@ -65,7 +65,7 @@ public class CommunityService {
         try{
             //List<Community> communities = communityRepository.findCommunityBypostId(postId);
             Optional<Community> communities = communityRepository.findById(postId);
-            List<Comment> comments = commentRepository.findCommentBypostId(postId);
+            List<Comment> comments = commentRepository.findCommentByCommunity(communities.get());
             if (communities.isEmpty()) {
                 return new CommunityResponseDto(false, 3027, " 게시글 없음", null);
             }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public class SMSResponseDto {
 
     private String message;
 
-    private List<String> result;
+    private SingleMessageSentResponse result;
 }
