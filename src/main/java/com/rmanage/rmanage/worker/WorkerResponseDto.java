@@ -1,5 +1,6 @@
 package com.rmanage.rmanage.worker;
 
+import com.rmanage.rmanage.WorkAllowance.Stat;
 import com.rmanage.rmanage.entity.Worker;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class WorkerResponseDto {
     private String tax;
     private String wageType;
     private LocalDateTime workAuthDate;
+    private Stat stat;
 
     @Builder
     public WorkerResponseDto(Worker worker) {
@@ -41,6 +43,9 @@ public class WorkerResponseDto {
         this.tax = worker.getTax();
         this.wageType = worker.getWageType();
         this.workAuthDate = worker.getWorkAuthDate();
+    }
 
+    public void setStat(Stat stat) {
+        this.stat = stat;
     }
 }

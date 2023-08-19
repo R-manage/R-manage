@@ -1,5 +1,6 @@
 package com.rmanage.rmanage.entity;
 
+import com.rmanage.rmanage.worker.WorkerUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -59,5 +60,19 @@ public class Worker {
 
     public void updateManager(boolean isManager) {
         this.isManager = isManager;
+    }
+
+    public void update(WorkerUpdateRequestDto workerUpdateRequestDto) {
+        this.period = workerUpdateRequestDto.getPeriod();
+        this.payDay = workerUpdateRequestDto.getPayDay();
+        this.workAuthDate = workerUpdateRequestDto.getWorkAuthDate();
+        this.color = workerUpdateRequestDto.getColor();
+        this.breakTime = workerUpdateRequestDto.getBreakTime();
+        this.holidayPay = workerUpdateRequestDto.getHolidayPay();
+        this.isManager = workerUpdateRequestDto.isManager();
+        this.hourlyWage = workerUpdateRequestDto.getHourlyWage();
+        this.tax = workerUpdateRequestDto.getTax();
+        this.wageType = workerUpdateRequestDto.getWageType();
+
     }
 }
