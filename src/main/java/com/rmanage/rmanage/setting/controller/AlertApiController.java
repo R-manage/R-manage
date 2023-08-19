@@ -1,6 +1,5 @@
 package com.rmanage.rmanage.setting.controller;
 
-import com.rmanage.rmanage.setting.dto.AlertResultDto;
 import com.rmanage.rmanage.setting.dto.SearchAlert;
 import com.rmanage.rmanage.setting.dto.SearchUserId;
 import com.rmanage.rmanage.setting.Service.AlertService;
