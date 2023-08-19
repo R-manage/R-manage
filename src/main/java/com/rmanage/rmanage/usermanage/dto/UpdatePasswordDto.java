@@ -1,16 +1,15 @@
 package com.rmanage.rmanage.usermanage.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponseDto {
-    private boolean isSuccess;
-    private int code;
-    private String message;
+public class UpdatePasswordDto {
+    private String email;
+
 }
