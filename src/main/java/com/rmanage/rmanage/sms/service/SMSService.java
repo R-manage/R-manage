@@ -33,7 +33,7 @@ public class SMSService {
 
     DefaultMessageService messageService;
 
-    // 전화번호번호 인증 요청
+    // 전화번호 인증 요청
     @Transactional
     public SMSResponseDto sendSMSById(String phonenumber, long userId) {
         try{
