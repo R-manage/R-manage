@@ -1,10 +1,13 @@
 package com.rmanage.rmanage.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @NoArgsConstructor
 @Entity
+@Getter
 
 public class Comment extends BaseTimeEntity {
 
@@ -23,9 +26,14 @@ public class Comment extends BaseTimeEntity {
 
     private String content;
 
-    public Comment(User user, Community community, String content) {
+    //@ColumnDefault("false")
+    private boolean isAnonymous;
+
+    public Comment(User user, Community community, String content, boolean isAnonymous) {
         this.user = user;
         this.community = community;
         this.content = content;
+        this.isAnonymous = isAnonymous;
     }
+
 }
