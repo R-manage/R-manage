@@ -35,6 +35,7 @@ public class ManageController {
     private final UserService userService;
     private final WorkPlaceRepository workPlaceRepository;
     private final WorkerRepository workerRepository;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -59,7 +60,16 @@ public class ManageController {
             user.setRole(joinDto.getRole());
             User newUser = userRepository.save(user);
             if (user.getRole().equals("ROLE_ADMIN")) {
-                WorkPlace workPlace = workPlaceRepository.save(new WorkPlace("", mailService.makeCode(6)));
+                String authCode = null;
+                while(true){
+                    authCode = mailService.makeCode(6);
+                    if(workPlaceRepository.findWorkPlaceByAdminCode(authCode) == null){
+                        break;
+                    } else {
+                        System.out.println("인증코드가 겹침!");
+                    }
+                }
+                WorkPlace workPlace = workPlaceRepository.save(new WorkPlace(authCode, authCode));
                 workerRepository.save(Worker.builder()
                         .workPlace(workPlace)
                         .user(newUser)
