@@ -21,11 +21,16 @@ public class WorkPlace {
     private Long workPlaceId;
 
     private String name;
+    private String adminCode;
+
 
 
     @Builder
-    public WorkPlace(String name) {
+    public WorkPlace(String name, String adminCode) {
+
         this.name = name;
+        this.adminCode = adminCode;
+
     }
 
     public void update(String name) {

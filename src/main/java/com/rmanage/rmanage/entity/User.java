@@ -35,7 +35,6 @@ public class User extends BaseTimeEntity{
     private String phoneNumber;
     private String email;
     private boolean isEmployee;
-    private String adminCode;
     private int phoneCode;
 
     private String phoneAuthDate;
@@ -53,11 +52,6 @@ public class User extends BaseTimeEntity{
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.isEmployee = isEmployee;
-        if (this.isEmployee){
-            this.adminCode = null;
-        }
-        else
-            this.adminCode = adminCode;
         this.phoneCode = phoneCode;
         this.phoneAuthDate = phoneAuthDate;
         this.passwordAuthDate = LocalDateTime.now();

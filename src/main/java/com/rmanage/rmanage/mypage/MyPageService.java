@@ -16,6 +16,7 @@ import com.rmanage.rmanage.usermanage.dto.UserManageResponseDto;
 import jakarta.persistence.EntityManager;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MyPageService {
     private final MyPageRepository myPageRepository;
     private WorkAllowanceRepository workAllowanceRepository;
@@ -57,7 +59,7 @@ public class MyPageService {
     //사장_마이페이지 조회
     public AdminMyPageResponseDto getAdminMyPage(Long userId){
         try{
-            User admin = myPageRepository.findUserByUserId(userId);
+            User admin = entityManager.find(User.class,userId);
 
             if (admin == null){
                 return new AdminMyPageResponseDto(false, 3002, "존재하지 않는 회원", null);
@@ -90,7 +92,7 @@ public class MyPageService {
         List<WorkAllowance> workAllowances = findWorkAllowancesByMonth(worker);
         //이건 매 작업 할당량들은 정해놓은거인듯.해당 worker의 해당 달 시작일, 마지막 일, 구해서 할당량 레포지토리 저장
 
-        User user = myPageRepository.findUserByWorker(worker);
+        User user = myPageRepository.findUserByWorkerId(worker.getWorkerId());
         List<WorkPlace> workPlaces = new ArrayList<>();
         workPlaces.add(worker.getWorkPlace());
 
@@ -129,15 +131,16 @@ public class MyPageService {
 
     //사장님_고용자 수, 고용자들 총 지급금액, 이번달 고용자들 총 지급금액 get
     public AdminMyPageDto getAdminTotalInfo(long userId) {
-        User admin = myPageRepository.findUserByUserId(userId);
+        User adminUser = entityManager.find(User.class, userId);
+        WorkPlace admin = entityManager.find(WorkPlace.class,userId);
         List<Worker> workers = getWorkersByAdminCode(admin.getAdminCode());
         int employeeNum = getWorkersByAdminCode(admin.getAdminCode()).size();
         long totalPay = getWorkersTotalPay(workers);
         long currentMonthTotalPay = getWorkersTotalPayForCurrentMonth(workers);
 
         return AdminMyPageDto.builder()
-                .image(admin.getImage())
-                .nickname(admin.getNickname())
+                .image(adminUser.getImage())
+                .nickname(adminUser.getNickname())
                 .employeeNum(employeeNum)
                 .totalPay(totalPay)
                 .currentMonthTotalPay(currentMonthTotalPay)
@@ -146,7 +149,7 @@ public class MyPageService {
 
     //adminCode가 같은 worker들 list
     private List<Worker> getWorkersByAdminCode(String adminCode) {
-        List<Worker> workers = myPageRepository.findWorkerByAdminCode(adminCode);
+        List<Worker> workers = myPageRepository.findWorkerByWorkPlace(entityManager.find(WorkPlace.class, adminCode));
         return workers;
     }
 
@@ -163,7 +166,7 @@ public class MyPageService {
     private long getWorkersTotalPayForCurrentMonth(List<Worker> workers) {
         return workers.stream()
                 .mapToLong(worker -> {
-                    List<WorkAllowance> workAllowances = myPageRepository.findWorkAllowancesByWorker(worker);
+                    List<WorkAllowance> workAllowances = workAllowanceRepository.findWorkAllowancesByWorker(worker);
                     long currentMonthWorkTime = getWorkTimeForCurrentMonth(workAllowances);
                     return currentMonthWorkTime * worker.getHourlyWage();
                 })
@@ -173,7 +176,7 @@ public class MyPageService {
     //이미지 수정 성공여부
     protected UserManageResponseDto updateProfile(long userId, String image){
         try {
-            User user = myPageRepository.findUserByUserId(userId);
+            User user = entityManager.find(User.class,userId);
             if (user == null) {
                 return new UserManageResponseDto(false, 3002, "존재하지 않는 회원");
             }

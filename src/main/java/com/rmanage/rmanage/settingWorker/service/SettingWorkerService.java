@@ -33,9 +33,9 @@ public class SettingWorkerService {
     final WorkPlaceRepository workPlaceRepository;
 
     public void createWorkPlace() {
-        workPlaceRepository.save(WorkPlace.builder().name("근무지1").build());
-        workPlaceRepository.save(WorkPlace.builder().name("근무지2").build());
-        workPlaceRepository.save(WorkPlace.builder().name("근무지3").build());
+//        workPlaceRepository.save(WorkPlace.builder().name("근무지1").build());
+//        workPlaceRepository.save(WorkPlace.builder().name("근무지2").build());
+//        workPlaceRepository.save(WorkPlace.builder().name("근무지3").build());
     }
 
     public void createWorker() {

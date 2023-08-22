@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface WorkAllowanceRepository extends JpaRepository<WorkAllowance, Long> {
     List<WorkAllowance> findByWorkerAndWorkDateBetween(Worker worker, LocalDate start, LocalDate end);
+    List<WorkAllowance> findWorkAllowancesByWorker(Worker worker);
+
 }
