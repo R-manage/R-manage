@@ -4,5 +4,5 @@ import com.rmanage.rmanage.entity.WorkPlace;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WorkPlaceRepository extends JpaRepository<WorkPlace, Long> {
-
+    public WorkPlace findWorkPlaceByAdminCode(String adminCode);
 }
