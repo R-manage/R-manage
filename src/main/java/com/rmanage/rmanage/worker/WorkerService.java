@@ -30,8 +30,9 @@ public class WorkerService {
 
         User user = userRepository.findById(workerSaveDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. id=" + workerSaveDto.getUserId()));
-
-        WorkPlace workPlace = workPlaceRepository.save(new WorkPlace(workerSaveDto.getWorkPlaceName()));
+        //WorkPlace에 adminCode 필드 추가로 생성자에 초기화를 시켜주는 바람에 아래 코드 잠깐 주석처리 해놓겠습니다!
+        WorkPlace workPlace = null;
+//        WorkPlace workPlace = workPlaceRepository.save(new WorkPlace(workerSaveDto.getWorkPlaceName()));
         workerRepository.save(workerSaveDto.toEntity(user, workPlace));
     }
 

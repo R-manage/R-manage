@@ -75,9 +75,9 @@ public class MailServiceImpl implements MailService{
             mailSender.send(mail);
         } catch (MessagingException e) {
             e.printStackTrace();
-            return new MailResponseDto(false, 1234, "메일 전송 실패", null);
+            return new MailResponseDto(false, 3020, "메일 전송 실패", null);
         }
 
-        return new MailResponseDto(true, 1234, "메일 전송 성공", authCode);
+        return new MailResponseDto(true, 1005, "메일 전송 성공", authCode);
     }
 }
