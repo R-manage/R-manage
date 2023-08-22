@@ -14,6 +14,6 @@ public class AdminMyPageResponseDto {
     private boolean isSuccess;
     private int code;
     private String message;
-    private List<AdminMyPageDto> result;
+    private AdminMyPageDto result;
 
 }

@@ -13,6 +13,6 @@ public class WorkerMyPageResponseDto {
     private boolean isSuccess;
     private int code;
     private String message;
-    private List<WorkerMyPageDto> result;
+    private WorkerMyPageDto result;
 }
 

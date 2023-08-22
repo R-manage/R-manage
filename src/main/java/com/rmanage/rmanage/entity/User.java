@@ -28,6 +28,7 @@ public class User extends BaseTimeEntity{
     @JoinColumn(name = "workerId")
     private Worker worker;
 
+    private String image;
     private String role;
     private String password;
     private String nickname;
@@ -44,7 +45,8 @@ public class User extends BaseTimeEntity{
     private LocalDateTime passwordAuthDate;
 
     @Builder
-    public User(String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, String adminCode, int phoneCode, String phoneAuthDate) {
+    public User(String image, String role, String password, String nickname, String phoneNumber, String email, boolean isEmployee, String adminCode, int phoneCode, String phoneAuthDate) {
+        this.image = image;
         this.role = role;
         this.password = password;
         this.nickname = nickname;
@@ -78,5 +80,8 @@ public class User extends BaseTimeEntity{
     public void phoneUpdate(String phonenumber) {
         this.phoneNumber = phonenumber;
         this.phoneAuthDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
+    public String updateImage(String image){
+        return this.image = image;
     }
 }

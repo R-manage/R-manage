@@ -35,10 +35,10 @@ public class UserService {
     public UserManageResponseDto checkNicknameDuplication(String nickname) {
         try{
             if(userRepository.existsByNickname((nickname))){
-                return new UserManageResponseDto(false, 1234,"이미 존재하는 닉네임");
+                return new UserManageResponseDto(false, 3012,"이미 존재하는 닉네임");
             }
             else{
-                return new UserManageResponseDto(true, 1234, "닉네임 사용가능");
+                return new UserManageResponseDto(true, 1002, "닉네임 사용가능");
             }
         } catch (Exception e){
             throw new RuntimeException("이외 오류", e);
@@ -51,15 +51,15 @@ public class UserService {
         try {
             User user = userRepository.findUserByEmail(updatePasswordDto.getEmail());
             if (user == null) {
-                return new UserManageResponseDto(false, 3011, "존재하지 않는 이메일");
+                return new UserManageResponseDto(false, 3017, "존재하지 않는 이메일");
             }
             if (user.getEmail().equals(updatePasswordDto.getEmail())) {
                 user.pwUpdate(mailService.sendMail("findPw", updatePasswordDto.getEmail()).getAuthCode());
-                return new UserManageResponseDto(true, 1011, "비밀번호 찾기 및 임시발급 성공");
+                return new UserManageResponseDto(true, 1004, "비밀번호 찾기 및 임시발급 성공");
             }
         }   catch (Exception e){
             System.out.println(e);
-            return new UserManageResponseDto(false,3011,"비밀번호 찾기 및 임시발급 실패");
+            return new UserManageResponseDto(false,3010,"비밀번호 찾기 및 임시발급 실패");
         }
         return null;
     }

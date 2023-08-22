@@ -1,13 +1,14 @@
 package com.rmanage.rmanage.mypage;
 
+import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.mypage.dto.AdminMyPageResponseDto;
 import com.rmanage.rmanage.mypage.dto.WorkerMyPageResponseDto;
+import com.rmanage.rmanage.usermanage.dto.UserManageResponseDto;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -19,28 +20,37 @@ public class MyPageController {
 
 
     private final MyPageService myPageService;
+    private MyPageRepository myPageRepository;
 
-    //근로자 마이페이지
-    @GetMapping("/worker/mypage")
+    //근로자 마이페이지 조회
+    @GetMapping("/worker/{workerId}/mypage")
     public ResponseEntity<WorkerMyPageResponseDto> getWorkerMyPage(
-            @PathVariable Long userId,
             @PathVariable Long workerId){
-        WorkerMyPageResponseDto workerMyPageResponseDto = myPageService.getWorkerMyPage(userId, workerId);
+        WorkerMyPageResponseDto workerMyPageResponseDto = myPageService.getWorkerMyPage(workerId);
 
         return ResponseEntity.ok(workerMyPageResponseDto);
 
     }
 
-    //사장 마이페이지
-    @GetMapping("/admin/mypage")
+    //사장 마이페이지 조회
+    @GetMapping("/admin/{userId}/mypage")
     public ResponseEntity<AdminMyPageResponseDto> getAdminMyPage(
-            @PathVariable Long userId,
-            @PathVariable boolean isEmployee){
-        AdminMyPageResponseDto adminMyPageResponseDto = myPageService.getAdminMyPage(userId, isEmployee);
+            @PathVariable Long userId){
+        AdminMyPageResponseDto adminMyPageResponseDto = myPageService.getAdminMyPage(userId);
 
         return ResponseEntity.ok(adminMyPageResponseDto);
 
     }
+
+    //프로필 이미지 수정
+    @PatchMapping("/every/{userId}/profile")
+    public ResponseEntity<UserManageResponseDto> updateProfile(
+            @PathVariable Long userId, @RequestBody String image){
+        UserManageResponseDto userManageResponseDto = myPageService.updateProfile(userId, image);
+
+        return ResponseEntity.ok(userManageResponseDto);
+    }
+
 
 }
 

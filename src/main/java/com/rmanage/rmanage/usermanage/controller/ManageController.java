@@ -44,7 +44,7 @@ public class ManageController {
     public UserManageResponseDto join(@RequestBody JoinDto joinDto){
         try{
             if (userRepository.findUserByEmail(joinDto.getEmail()) != null){
-                return new UserManageResponseDto(false, 2324, "이미 존재하는 이메일");
+                return new UserManageResponseDto(false, 3011, "이미 존재하는 이메일");
             }
             joinDto.setPassword(bCryptPasswordEncoder.encode(joinDto.getPassword()));
             User user = new User();
@@ -55,11 +55,11 @@ public class ManageController {
             if (user.getRole().equals("ROLE_ADMIN"))
                 user.setAdminCode(mailService.makeCode(6));
             userRepository.save(user);
-            return new UserManageResponseDto(true, 1234, "회원가입 성공");
+            return new UserManageResponseDto(true, 1001, "회원가입 성공");
         }catch (Exception e){
             System.out.println(e);
         }
-        return new UserManageResponseDto(false, 1234, "회원가입 실패");
+        return new UserManageResponseDto(false, 3018, "회원가입 실패");
     }
     //닉네임 중복확인
     //중복이면 중복입니다, 중복 아니면 nickname return
