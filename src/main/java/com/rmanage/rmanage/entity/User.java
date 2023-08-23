@@ -21,12 +21,8 @@ import java.time.format.DateTimeFormatter;
 public class User extends BaseTimeEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "workerId")
-    private Worker worker;
 
     private String image;
     private String role;
