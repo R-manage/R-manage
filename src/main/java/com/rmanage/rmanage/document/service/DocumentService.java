@@ -1,6 +1,5 @@
 package com.rmanage.rmanage.document.service;
 
-import com.rmanage.rmanage.document.config.s3Setting.S3Uploader;
 import com.rmanage.rmanage.document.dto.RequestDto;
 import com.rmanage.rmanage.document.dto.ResponseDto;
 import com.rmanage.rmanage.document.dto.ResultDto;
