@@ -53,7 +53,7 @@ public class AccountService {
             User user = entity.get();
             // 조회 성공
             List<AccountResultDto> accountResult = new ArrayList<>();
-            accountResult.add(new AccountResultDto(user.getNickname(), user.getEmail(), user.getPhoneNumber(), null));
+            accountResult.add(new AccountResultDto(user.getNickname(), user.getEmail(), user.getPhoneNumber(), user.getImage()));
 
             return new AccountResponseDto(true,1044,"계정 조회 성공", accountResult);
         }   catch (Exception e){
