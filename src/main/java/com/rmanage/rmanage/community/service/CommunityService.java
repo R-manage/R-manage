@@ -96,7 +96,7 @@ public class CommunityService {
         }
     }
     // 글 쓰기
-    public CommunitySaveResponseDto postCommunity(Long workplaceId, String type, Long userId, String title, String content, MultipartFile image){
+    public CommunitySaveResponseDto postCommunity(Long workplaceId, String type, Long userId, String title, String content, String image){
         /* 작성자 정보 가져오기
         User user = userRepository.findById(communityDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. id=" + userId));
@@ -105,9 +105,7 @@ public class CommunityService {
             User user = entityManager.find(User.class, userId);
             WorkPlace workPlace = entityManager.find(WorkPlace.class, workplaceId);
             // 이미지 업로드
-            String filename = null;
-            filename = s3Uploader.uploadFiles(image, "image");
-            if(filename == null){
+            if(image == null){
                 return new CommunitySaveResponseDto(false,2020,"이미지 업로드에 실패함",null);
             }
             if(user == null){
@@ -131,7 +129,7 @@ public class CommunityService {
                 return new CommunitySaveResponseDto(false,2012, "내용 누락", null);
             }
 
-            Community community = new Community(user, workPlace, type, title, content, user.getNickname(), false, 0, filename);
+            Community community = new Community(user, workPlace, type, title, content, user.getNickname(), false, 0, image);
             Community community1 = communityRepository.save(community);
             List<CommunitySaveDto> communitySaveDto = List.of(new CommunitySaveDto(userId, community1.getPostId(), community1.getCreatedAt(), community1.getWriter(), community1.getTitle(), community1.getContent(), type, community1.getImageUrl()));
 
@@ -142,11 +140,9 @@ public class CommunityService {
             return new CommunitySaveResponseDto(false, 3023, "글쓰기 실패", null);
         }
     }
-    public CommunityResponseDto patchCommunity(Long postId, String title, String content, MultipartFile image) {
+    public CommunityResponseDto patchCommunity(Long postId, String title, String content, String image) {
         try {
-            String filename = null;
-            filename = s3Uploader.uploadFiles(image, "image");
-            if(filename == null){
+            if(image == null){
                 return new CommunityResponseDto(false,2030,"이미지 업로드에 실패함",null);
             }
             Optional<Community> community = communityRepository.findById(postId);
@@ -167,7 +163,7 @@ public class CommunityService {
                 return new CommunityResponseDto(false, 2016, "수정 사항 없음", null);
             }
             // 수정
-            community1.updateCommunity(title, content, filename);
+            community1.updateCommunity(title, content, image);
             return new CommunityResponseDto(true, 1015, "글 수정 성공", null);
         } catch (Exception e) {
             System.out.println(e);
