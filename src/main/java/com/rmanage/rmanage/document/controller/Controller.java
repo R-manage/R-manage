@@ -1,5 +1,6 @@
 package com.rmanage.rmanage.document.controller;
 
+import com.rmanage.rmanage.document.dto.RequestDto;
 import com.rmanage.rmanage.document.dto.ResponseDto;
 import com.rmanage.rmanage.document.service.DocumentService;
 import org.springframework.http.HttpStatus;
@@ -31,9 +32,8 @@ public class Controller {
     }
 
     @PostMapping("/every/workers/{workerId}/documents")
-    public ResponseEntity postDocument(@PathVariable int workerId, @RequestParam(value = "type") String type,
-                                       @RequestParam(value = "expireDate") LocalDate expireDate, @RequestParam(value = "image", required = false) MultipartFile image){
-        ResponseDto responseDto = documentService.postDocument(workerId, type, expireDate, image);
+    public ResponseEntity postDocument(@PathVariable int workerId, @RequestBody RequestDto requestDto){
+        ResponseDto responseDto = documentService.postDocument(workerId,requestDto);
         ResponseEntity<ResponseDto> responseEntity = null;
         if(responseDto.getCode() <= 1999){
             responseEntity = ResponseEntity.ok(responseDto);
@@ -56,9 +56,8 @@ public class Controller {
     }
 
     @PutMapping("/every/documents/{documentId}")
-    public ResponseEntity putDocument(@PathVariable int documentId,@RequestParam(value = "type") String type,
-                                      @RequestParam(value = "expireDate") LocalDate expireDate, @RequestParam(value = "image", required = false) MultipartFile image){
-        ResponseDto responseDto = documentService.putDocument((long)documentId, type, expireDate, image);
+    public ResponseEntity putDocument(@PathVariable int documentId,@RequestBody RequestDto requestDto){
+        ResponseDto responseDto = documentService.putDocument((long)documentId, requestDto);
         ResponseEntity<ResponseDto> responseEntity = null;
         if(responseDto.getCode() <= 1999){
             responseEntity = ResponseEntity.ok(responseDto);

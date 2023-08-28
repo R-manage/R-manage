@@ -1,6 +1,6 @@
 package com.rmanage.rmanage.document.service;
 
-import com.rmanage.rmanage.document.config.s3Setting.S3Uploader;
+import com.rmanage.rmanage.document.dto.RequestDto;
 import com.rmanage.rmanage.document.dto.ResponseDto;
 import com.rmanage.rmanage.document.dto.ResultDto;
 import com.rmanage.rmanage.document.repository.DocumentRepository;
@@ -20,13 +20,11 @@ import java.util.Optional;
 public class DocumentService {
     private DocumentRepository documentRepository;
     private EntityManager entityManager;
-    private S3Uploader s3Uploader;
 
     @Autowired
-    public DocumentService(DocumentRepository theDocumentRepository, EntityManager entityManager, S3Uploader s3Uploader){
+    public DocumentService(DocumentRepository theDocumentRepository, EntityManager entityManager){
         this.documentRepository = theDocumentRepository;
         this.entityManager = entityManager;
-        this.s3Uploader = s3Uploader;
     }
 
     public ResponseDto getDocuments(int workerId) {
@@ -51,21 +49,15 @@ public class DocumentService {
         }
     }
 
-    public ResponseDto postDocument(int workerId, String type, LocalDate expireDate, MultipartFile image) {
+    public ResponseDto postDocument(int workerId, RequestDto requestDto) {
         try {
             // 근무 근로자 조회
             Worker worker = entityManager.find(Worker.class, workerId);
             if(worker == null){
                 return new ResponseDto(false,3041,"해당하는 근무지, 근로자 정보가 없음",null);
             }
-            // 이미지 업로드
-            String filename = null;
-            filename = s3Uploader.uploadFiles(image, "image");
-            if(filename == null){
-                return new ResponseDto(false,4001,"이미지 업로드에 실패함",null);
-            }
             // 서류 등록 성공
-            Document document = new Document(worker.getUser(), worker.getWorkPlace(), type, expireDate, worker, filename);
+            Document document = new Document(worker.getUser(), worker.getWorkPlace(), requestDto.getType(), requestDto.getExpireDate(), worker, requestDto.getImage());
             Document theDocument = documentRepository.save(document);
             List<ResultDto> resultDto = List.of(new ResultDto(theDocument.getDocumentId(), theDocument.getType(), theDocument.getImageUrl(), theDocument.getExpireDate()));
             return new ResponseDto(true,1022,"서류 등록 성공", resultDto);
@@ -87,9 +79,6 @@ public class DocumentService {
                 return new ResponseDto(false,3042,"해당하는 문서가 존재하지 않음",null);
             }
             Document document1 = document.get();
-            System.out.println(document1);
-            // 이미지 삭제
-            s3Uploader.fileDelete(document1.getImageUrl());
             // 서류 삭제 성공
             documentRepository.delete(document1);
             return new ResponseDto(true,1023,"서류 삭제 성공",null);
@@ -102,7 +91,7 @@ public class DocumentService {
         }
     }
 
-    public ResponseDto putDocument(Long documentId, String type, LocalDate expireDate, MultipartFile image) {
+    public ResponseDto putDocument(Long documentId, RequestDto requestDto) {
         try {
             // 근무 근로자 조회
             Optional<Document> document = documentRepository.findById(documentId);
@@ -110,17 +99,9 @@ public class DocumentService {
                 return new ResponseDto(false,3042,"해당하는 문서가 존재하지 않음.",null);
             }
             Document document1 = document.get();
-            // 이미지 수정
-            String filename = null;
-            filename = s3Uploader.uploadFiles(image, "image");
-            if(filename == null){
-                return new ResponseDto(false,4001,"이미지 업로드에 실패함.",null);
-            } else {
-                s3Uploader.fileDelete(document1.getImageUrl());
-            }
             // 서류 수정 성공
             Document document2 = new Document(document1.getDocumentId(),document1.getUser(),
-                    document1.getWorkPlace(),document1.getWorker(),type,filename,expireDate);
+                    document1.getWorkPlace(),document1.getWorker(),requestDto.getType(),requestDto.getImage(),requestDto.getExpireDate());
             Document document3 = documentRepository.save(document2);
             List<ResultDto> resultDto = List.of(new ResultDto(document3.getDocumentId(), document3.getType(), document3.getImageUrl(), document3.getExpireDate()));
             return new ResponseDto(true,1024,"서류 수정 성공", resultDto);
