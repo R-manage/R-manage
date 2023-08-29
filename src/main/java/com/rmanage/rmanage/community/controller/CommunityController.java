@@ -50,7 +50,7 @@ public class CommunityController {
     @PostMapping("/every/{workplaceId}/community/{type}")
     public ResponseEntity postCommunity(@PathVariable Long workplaceId,
                                         @PathVariable String type,
-                                        @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) MultipartFile image) {
+                                        @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) String image) {
         CommunitySaveResponseDto communitySaveResponseDto = communityService.postCommunity(
                 workplaceId, type, communityDto.getUserId(), communityDto.getTitle(), communityDto.getContent(), image);
         return ResponseEntity.ok(communitySaveResponseDto);
@@ -59,7 +59,7 @@ public class CommunityController {
     @PostMapping("/admin/{workplaceId}/community/{type}")
     public ResponseEntity adminPostCommunity(@PathVariable Long workplaceId,
                                         @PathVariable String type,
-                                        @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) MultipartFile image) {
+                                        @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) String image) {
         CommunitySaveResponseDto communitySaveResponseDto = communityService.postCommunity(
                 workplaceId, type, communityDto.getUserId(), communityDto.getTitle(), communityDto.getContent(), image);
         return ResponseEntity.ok(communitySaveResponseDto);
@@ -68,7 +68,7 @@ public class CommunityController {
     @PostMapping("/worker/{workplaceId}/community/{type}")
     public ResponseEntity workerPostCommunity(@PathVariable Long workplaceId,
                                              @PathVariable String type,
-                                             @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) MultipartFile image) {
+                                             @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) String image) {
         CommunitySaveResponseDto communitySaveResponseDto = communityService.postCommunity(
                 workplaceId, type, communityDto.getUserId(), communityDto.getTitle(), communityDto.getContent(), image);
         return ResponseEntity.ok(communitySaveResponseDto);
@@ -78,7 +78,7 @@ public class CommunityController {
     @PatchMapping("/every/community/{postId}")
     public ResponseEntity patchCommunity(
             @PathVariable Long postId,
-            @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) MultipartFile image){
+            @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) String image){
         CommunityResponseDto communityResponseDto = communityService.patchCommunity(postId, communityDto.getTitle(), communityDto.getContent(), image);
         return ResponseEntity.ok(communityResponseDto);
     }
@@ -86,7 +86,7 @@ public class CommunityController {
     @PatchMapping("/admin/community/{postId}")
     public ResponseEntity adminPatchCommunity(
             @PathVariable Long postId,
-            @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) MultipartFile image){
+            @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) String image){
         CommunityResponseDto communityResponseDto = communityService.patchCommunity(postId, communityDto.getTitle(), communityDto.getContent(), image);
         return ResponseEntity.ok(communityResponseDto);
     }
@@ -94,7 +94,7 @@ public class CommunityController {
     @PatchMapping("/worker/community/{postId}")
     public ResponseEntity workerPatchCommunity(
             @PathVariable Long postId,
-            @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) MultipartFile image){
+            @RequestBody CommunityDto communityDto, @RequestParam(value = "image", required = false) String image){
         CommunityResponseDto communityResponseDto = communityService.patchCommunity(postId, communityDto.getTitle(), communityDto.getContent(), image);
         return ResponseEntity.ok(communityResponseDto);
     }
