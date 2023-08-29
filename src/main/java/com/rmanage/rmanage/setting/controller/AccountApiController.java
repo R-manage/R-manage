@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccountApiController {
     private final AccountService accountService;
 
+    @PostMapping("/every/account")
+    public ResponseEntity<AccountResponseDto> findAccount(@RequestBody SearchUserId searchUserId) {
+
+
+        AccountResponseDto findUser = accountService.findAccountById(searchUserId.getUserId());
+
+        return ResponseEntity.ok().body(findUser);
+    }
 
     @PostMapping("/every/email")
     public ResponseEntity<EmailResponseDto> findEmail(@RequestBody SearchUserId searchUserId) {
@@ -45,6 +53,15 @@ public class AccountApiController {
     public ResponseEntity<PwResponseDto> updatePw(@RequestBody PwRequestDto pwRequestDto) {
 
         PwResponseDto findUser = accountService.updatePwById(pwRequestDto.getUserId(), pwRequestDto.getPassword());
+
+        return ResponseEntity.ok().body(findUser);
+    }
+
+    @PostMapping("/every/security")
+    public ResponseEntity<SecurityResponseDto> checkSecurity(@RequestBody SearchUserId searchUserId) {
+
+        SecurityResponseDto findUser = accountService.findSecurityById(searchUserId.getUserId());
+
 
         return ResponseEntity.ok().body(findUser);
     }

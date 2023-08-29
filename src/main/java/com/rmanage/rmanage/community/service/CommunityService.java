@@ -3,7 +3,6 @@ package com.rmanage.rmanage.community.service;
 import com.rmanage.rmanage.community.dto.*;
 import com.rmanage.rmanage.community.repository.CommentRepository;
 import com.rmanage.rmanage.community.repository.CommunityRepository;
-import com.rmanage.rmanage.document.config.s3Setting.S3Uploader;
 import com.rmanage.rmanage.document.dto.ResponseDto;
 import com.rmanage.rmanage.entity.Comment;
 import com.rmanage.rmanage.entity.Community;
@@ -24,17 +23,18 @@ import java.util.Optional;
 
 @Service
 public class CommunityService {
+    // s3 부분 삭제하여서 올립니다 수정하여 주세요!
+
     private final CommunityRepository communityRepository;
     private final CommentRepository commentRepository;
     private EntityManager entityManager;
-    private S3Uploader s3Uploader;
     private CommentService commentService;
     @Autowired
-    public CommunityService(CommunityRepository communityRepository, CommentRepository commentRepository, EntityManager entityManager, S3Uploader s3Uploader){
+    public CommunityService(CommunityRepository communityRepository, CommentRepository commentRepository, EntityManager entityManager){
         this.communityRepository = communityRepository;
         this.commentRepository = commentRepository;
         this.entityManager = entityManager;
-        this.s3Uploader = s3Uploader;
+
     }
     // 글 목록 조회
     public CommunityListResponseDto getCommunityList(Long workplaceId, String type){
@@ -65,7 +65,7 @@ public class CommunityService {
         try{
             //List<Community> communities = communityRepository.findCommunityBypostId(postId);
             Optional<Community> communities = communityRepository.findById(postId);
-            List<Comment> comments = commentRepository.findCommentBypostId(postId);
+            List<Comment> comments = commentRepository.findCommentByCommunity(communities.get());
             if (communities.isEmpty()) {
                 return new CommunityResponseDto(false, 3027, " 게시글 없음", null);
             }

@@ -1,5 +1,6 @@
 package com.rmanage.rmanage.entity;
 
+import com.rmanage.rmanage.worker.WorkerUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,8 +41,7 @@ public class Worker {
 
 
     @Builder
-    public Worker(Long workerId, WorkPlace workPlace, User user, String name, LocalDateTime period, String color, boolean isCertified, String breakTime, String holidayPay, boolean isManager, int hourlyWage, LocalDateTime payDay, String tax, String wageType, LocalDateTime workAuthDate) {
-        this.workerId = workerId;
+    public Worker(WorkPlace workPlace, User user, String name, LocalDateTime period, String color, boolean isCertified, String breakTime, String holidayPay, boolean isManager, int hourlyWage, LocalDateTime payDay, String tax, String wageType, LocalDateTime workAuthDate) {
         this.workPlace = workPlace;
         this.user = user;
         this.name = name;
@@ -56,6 +56,23 @@ public class Worker {
         this.tax = tax;
         this.wageType = wageType;
         this.workAuthDate = workAuthDate;
+    }
+
+    public void updateManager(boolean isManager) {
+        this.isManager = isManager;
+    }
+
+    public void update(WorkerUpdateRequestDto workerUpdateRequestDto) {
+        this.period = workerUpdateRequestDto.getPeriod();
+        this.payDay = workerUpdateRequestDto.getPayDay();
+        this.workAuthDate = workerUpdateRequestDto.getWorkAuthDate();
+        this.color = workerUpdateRequestDto.getColor();
+        this.breakTime = workerUpdateRequestDto.getBreakTime();
+        this.holidayPay = workerUpdateRequestDto.getHolidayPay();
+        this.isManager = workerUpdateRequestDto.isManager();
+        this.hourlyWage = workerUpdateRequestDto.getHourlyWage();
+        this.tax = workerUpdateRequestDto.getTax();
+        this.wageType = workerUpdateRequestDto.getWageType();
 
     }
 }

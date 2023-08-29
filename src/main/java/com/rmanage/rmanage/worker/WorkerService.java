@@ -1,8 +1,11 @@
 package com.rmanage.rmanage.worker;
 
 import com.rmanage.rmanage.UserRepository;
+import com.rmanage.rmanage.WorkAllowance.Stat;
+import com.rmanage.rmanage.WorkAllowance.WorkAllowanceService;
 import com.rmanage.rmanage.entity.User;
 import com.rmanage.rmanage.entity.WorkPlace;
+import com.rmanage.rmanage.entity.Worker;
 import com.rmanage.rmanage.workPlace.WorkPlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,40 +16,45 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-
-
 public class WorkerService {
 
     private final WorkerRepository workerRepository;
     private final UserRepository userRepository;
     private final WorkPlaceRepository workPlaceRepository;
 
-    public void save(WorkerSaveDto workerSaveDto) {
+    private final WorkAllowanceService workAllowanceService;
 
-        userRepository.save(User.builder()
-                        .email("email")
-                        .isEmployee(true)
-                        .phoneAuthDate("2023-03-03")
-                        .nickname("oyun")
-                        .password("password")
-                        .phoneCode(1111)
-                        .phoneNumber("1111")
-                .build());
+
+    @Transactional
+    public void save(WorkerSaveDto workerSaveDto) {
 
         User user = userRepository.findById(workerSaveDto.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. id=" + workerSaveDto.getUserId()));
-
-        WorkPlace workPlace = workPlaceRepository.save(new WorkPlace(workerSaveDto.getName()));
+        //WorkPlace에 adminCode 필드 추가로 생성자에 초기화를 시켜주는 바람에 아래 코드 잠깐 주석처리 해놓겠습니다!
+        WorkPlace workPlace = null;
+//        WorkPlace workPlace = workPlaceRepository.save(new WorkPlace(workerSaveDto.getWorkPlaceName()));
         workerRepository.save(workerSaveDto.toEntity(user, workPlace));
     }
 
+    @Transactional
+    public void update(Long workerId, WorkerUpdateRequestDto workerUpdateRequestDto) {
 
-    public void update(WorkPlace workPlace) {
+        Worker worker = workerRepository.findById(workerId)
+                .orElseThrow(() -> new IllegalArgumentException("근로자가 존재하지 않습니다. id=" + workerId));
 
+        WorkPlace workPlace = worker.getWorkPlace();
+
+        worker.update(workerUpdateRequestDto);
+        workPlace.update(workerUpdateRequestDto.getWorkPlaceName());
     }
 
+    @Transactional
+    public void delete(Long workerId) {
 
-    public void delete(WorkPlace workPlace) {
+        Worker worker = workerRepository.findById(workerId)
+                .orElseThrow(() -> new IllegalArgumentException("근무지가 존재하지 않습니다."));
+
+        workerRepository.delete(worker);
 
     }
 
@@ -54,16 +62,20 @@ public class WorkerService {
     @Transactional(readOnly = true)
     public WorkerResponseDto getWorkerById(Long workerId) {
 
-        return workerRepository.findById(workerId)
-                .map(WorkerResponseDto::new)
-                .orElseThrow(()-> new IllegalArgumentException("근무지가 존재하지 않습니다."));
+        Worker worker = workerRepository.findById(workerId)
+                .orElseThrow(() -> new IllegalArgumentException("근무지가 존재하지 않습니다."));
 
+        Stat stat = workAllowanceService.getStat(worker);
 
+        WorkerResponseDto workerResponseDto = new WorkerResponseDto(worker);
+        workerResponseDto.setStat(stat);
+
+        return workerResponseDto;
     }
 
     //전체 조회
     @Transactional(readOnly = true)
-    public List<WorkerResponseDto> getWorkerByUser(Long userId) {
+    public List<WorkerResponseDto> getWorkersByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("유저가 존재하지 않습니다. id=" + userId));
 
@@ -72,4 +84,8 @@ public class WorkerService {
                 .collect(Collectors.toList());
 
     }
+
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.rmanage.rmanage.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Entity
-
+@Getter
 public class WorkAllowance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

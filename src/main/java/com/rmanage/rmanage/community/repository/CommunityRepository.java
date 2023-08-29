@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CommunityRepository extends JpaRepository<Community, Long> {
     List<Community> findByWorkPlace_WorkPlaceIdAndType(Long workPlaceId, String type);
-    List<Community> findCommunityBypostId(Long postId);
+    List<Community> findCommunityByPostId(Long postId);
     List<Community> findCommunityByWorkPlaceAndType(WorkPlace workPlace, String type);
 
 }

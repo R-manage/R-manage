@@ -55,7 +55,7 @@ public class AlertService {
         try {
             Optional<Setting> entity = settingRepository.findById(userId);
             if(entity.isEmpty()){
-                return new AlertResponseDto(false,3013,"해당하는 근로자 정보가 없음",null);
+                return new AlertResponseDto(false,3002,"존재하지 않는 회원",null);
             }
             Setting setting = entity.get();
             // 조회 성공
@@ -63,10 +63,10 @@ public class AlertService {
 
             alertResult.add(new AlertResultDto(setting.isAlarm(), setting.isPreview(), setting.isPushAlarm(), setting.isPushSound(), setting.isPushVibration()));
 
-            return new AlertResponseDto(true,1011,"알람설정 조회 성공", alertResult);
+            return new AlertResponseDto(true,1052,"알람설정 조회 성공", alertResult);
         }   catch (Exception e){
             System.out.println(e);
-            return new AlertResponseDto(false,3041,"알람설정 조회 실패",null);
+            return new AlertResponseDto(false,3061,"알람설정 조회 실패",null);
         }
     }
 
@@ -74,10 +74,9 @@ public class AlertService {
     @Transactional
     public AlertResponseDto updateAlertById(long userId, boolean alarm, boolean preview, boolean pushAlarm, boolean pushSound, boolean pushVibration) {
         try {
-            // boolean 값 유효성 검사도 해야하나?
             Optional<Setting> entity = settingRepository.findById(userId);
             if(entity.isEmpty()){
-                return new AlertResponseDto(false,3013,"해당하는 근로자 정보가 없음",null);
+                return new AlertResponseDto(false,3002,"존재하지 않는 회원",null);
             }
             Setting setting = entity.get();
             // 조회 성공
@@ -86,10 +85,10 @@ public class AlertService {
 
             alertResult.add(new AlertResultDto(setting.isAlarm(), setting.isPreview(), setting.isPushAlarm(), setting.isPushSound(), setting.isPushVibration()));
 
-            return new AlertResponseDto(true,1011,"알람설정 조회 성공", alertResult);
+            return new AlertResponseDto(true,1053,"알람설정 수정 성공", alertResult);
         }   catch (Exception e){
             System.out.println(e);
-            return new AlertResponseDto(false,3041,"알람설정 조회 실패",null);
+            return new AlertResponseDto(false,3062,"알람설정 수정 실패",null);
         }
     }
 }

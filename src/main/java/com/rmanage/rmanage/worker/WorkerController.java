@@ -1,6 +1,8 @@
 package com.rmanage.rmanage.worker;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +20,34 @@ public class WorkerController {
         return ResponseEntity.ok("근무지가 등록되었습니다");
     }
 
+    @PatchMapping("/{workerId}")
+    public ResponseEntity update(@PathVariable Long workerId, @Valid @RequestBody WorkerUpdateRequestDto workerUpdateRequestDto) {
+        workerService.update(workerId, workerUpdateRequestDto);
+
+        return ResponseEntity.ok("근무지가 수정되었습니다.");
+    }
+
+    @DeleteMapping("/{workerId}")
+    public ResponseEntity delete(@PathVariable Long workerId) {
+        workerService.delete(workerId);
+
+        return ResponseEntity.ok("근무지가 삭제되었습니다.");
+    }
+
+
+    //세부조회
     @GetMapping("/{workerId}")
-    public ResponseEntity<WorkerResponseDto> getWorker(@PathVariable Long workerId) {
+    public ResponseEntity<WorkerResponseDto> getWorkerById(@PathVariable Long workerId) {
 
         return ResponseEntity.ok(workerService.getWorkerById(workerId));
 
     }
 
+    //전체조회
     @GetMapping()
-    public ResponseEntity<List<WorkerResponseDto>> getWorkers(@RequestParam Long userId) {
+    public ResponseEntity<List<WorkerResponseDto>> getWorkersByUser(@RequestParam Long userId) {
 
-        return ResponseEntity.ok(workerService.getWorkerByUser(userId));
+        return ResponseEntity.ok(workerService.getWorkersByUser(userId));
     }
 
 
